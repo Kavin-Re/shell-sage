@@ -1,0 +1,79 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shellsage"
+dynamic = ["version"]
+description = "Offline natural-language-to-shell assistant with a deterministic risk engine (local Ollama, zero runtime dependencies)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Kavin K K" }]
+keywords = ["cli", "shell", "bash", "zsh", "ollama", "llm", "offline", "security"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: System :: Shells",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+# Runtime dependencies: none. Python 3.10 needs a TOML reader only if you use a
+# config file (tomllib is in the standard library from 3.11).
+dependencies = ["tomli>=2.0; python_version < '3.11'"]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.16,<0.17", "mypy>=2.3,<3"]
+
+[project.urls]
+Homepage = "https://github.com/Kavin-Re/shell-sage"
+Issues = "https://github.com/Kavin-Re/shell-sage/issues"
+Changelog = "https://github.com/Kavin-Re/shell-sage/blob/main/CHANGELOG.md"
+
+[project.scripts]
+sage = "shellsage.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "shellsage.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+shellsage = ["py.typed", "shell/*.bash", "shell/*.zsh"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "C4", "RUF", "PL"]
+ignore = [
+    "PLR0911", "PLR0912", "PLR0913", "PLR0915", "PLR0917", # rule tables are long by nature
+    "PLR2004",                                  # small literal thresholds are clearer inline
+    "SIM108",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["PLR", "E501", "SIM117"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src/shellsage", "tests"]
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = ["tomli"]
+ignore_missing_imports = true

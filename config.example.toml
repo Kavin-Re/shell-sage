@@ -1,0 +1,22 @@
+# ShellSage configuration - copy to ~/.config/shellsage/config.toml
+# Every value below is the built-in default; delete what you do not change.
+# Precedence: built-in defaults < this file < SHELLSAGE_* environment < command line.
+
+[ollama]
+model = "qwen2.5-coder:3b"        # any model you have pulled:  ollama list
+host = "http://127.0.0.1:11434"   # keep this on loopback to stay fully offline
+timeout = 60                      # seconds; the first request loads the model and is slow
+temperature = 0.1                 # low = repeatable commands
+
+[context]
+history_lines = 0                 # 0 = never read shell history (default). Max 50.
+history_file = ""                 # "" = $HISTFILE, else ~/.bash_history or ~/.zsh_history
+redact_patterns = []              # extra regexes to redact, e.g. ["corp-[0-9]{6}"]
+shell = ""                        # "" = detect from $SHELL (bash, zsh, sh, dash, ksh, fish)
+
+[ui]
+color = "auto"                    # auto | always | never   (NO_COLOR is honoured in auto)
+
+[safety]
+allow_danger = false              # true = DANGER commands may run after typing "yes, run it".
+                                  # File-only on purpose: no env var or flag can enable it.

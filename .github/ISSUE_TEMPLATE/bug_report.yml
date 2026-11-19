@@ -1,0 +1,40 @@
+name: Bug report
+description: Report something that is not working
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Describe the bug and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps, as exact as possible.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: OS and Python version
+      description: e.g. Ubuntu 24.04, Python 3.12.
+    validations:
+      required: true
+  - type: input
+    id: ollama
+    attributes:
+      label: Ollama version and model
+      description: e.g. ollama 0.x, model name.
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or output
+      description: Paste relevant output. It will be formatted as code.
+      render: shell
+    validations:
+      required: false
